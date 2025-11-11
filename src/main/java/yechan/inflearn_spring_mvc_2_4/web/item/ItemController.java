@@ -2,8 +2,8 @@ package yechan.inflearn_spring_mvc_2_4.web.item;
 
 import yechan.inflearn_spring_mvc_2_4.domain.item.Item;
 import yechan.inflearn_spring_mvc_2_4.domain.item.ItemRepository;
-import yechan.inflearn_spring_mvc_2_4.web.item.form.ItemSaveForm;
-import yechan.inflearn_spring_mvc_2_4.web.item.form.ItemUpdateForm;
+import yechan.inflearn_spring_mvc_2_4.web.item.dto.ItemSaveDto;
+import yechan.inflearn_spring_mvc_2_4.web.item.dto.ItemUpdateDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -44,7 +44,7 @@ public class ItemController {
     }
 
     @PostMapping("/add")
-    public String addItem(@Validated @ModelAttribute("item") ItemSaveForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String addItem(@Validated @ModelAttribute("item") ItemSaveDto form, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 
         //특정 필드 예외가 아닌 전체 예외
         if (form.getPrice() != null && form.getQuantity() != null) {
@@ -79,7 +79,7 @@ public class ItemController {
     }
 
     @PostMapping("/{itemId}/edit")
-    public String edit(@PathVariable Long itemId, @Validated @ModelAttribute("item") ItemUpdateForm form, BindingResult bindingResult) {
+    public String edit(@PathVariable Long itemId, @Validated @ModelAttribute("item") ItemUpdateDto form, BindingResult bindingResult) {
 
         //특정 필드 예외가 아닌 전체 예외
         if (form.getPrice() != null && form.getQuantity() != null) {

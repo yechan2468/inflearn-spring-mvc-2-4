@@ -1,4 +1,4 @@
-package yechan.inflearn_spring_mvc_2_4.web.item.form;
+package yechan.inflearn_spring_mvc_2_4.web.item.dto;
 
 import lombok.Data;
 import org.hibernate.validator.constraints.Range;
@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 @Data
-public class ItemSaveForm {
+public class ItemSaveDto {
 
     @NotBlank
     private String itemName;
