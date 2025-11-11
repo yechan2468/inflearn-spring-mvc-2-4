@@ -1,6 +1,7 @@
 package yechan.inflearn_spring_mvc_2_4.web;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -41,13 +42,25 @@ public class HomeController {
         return "loginHome";
     }
 
-    @GetMapping("/")
+//    @GetMapping("/")
     public String homeLoginV2(HttpServletRequest request, Model model) {
         Object loginSession = sessionManager.getSession(request);
         if (loginSession == null) return "home";
 
         Member member = (Member) loginSession;
         model.addAttribute("member", member);
+
+        return "loginHome";
+    }
+
+    @GetMapping("/")
+    public String homeLoginV3(HttpServletRequest request, Model model) {
+        HttpSession session = request.getSession(false);
+        if (session == null) return "home";
+
+        Member loginMember = (Member) session.getAttribute(SessionConst.LOGIN_MEMBER);
+        if (loginMember == null) return "home";
+        model.addAttribute("member", loginMember);
 
         return "loginHome";
     }
