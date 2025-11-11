@@ -1,5 +1,7 @@
 package yechan.inflearn_spring_mvc_2_4.web.login;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -24,7 +26,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@Validated @ModelAttribute("loginForm") LoginDto loginDto, BindingResult bindingResult) {
+    public String login(@Validated @ModelAttribute("loginForm") LoginDto loginDto, BindingResult bindingResult, HttpServletResponse response) {
         if (bindingResult.hasErrors()) {
             return "login/loginForm";
         }
@@ -36,6 +38,22 @@ public class LoginController {
             return "login/loginForm";
         }
 
+        Cookie cookie = new Cookie("memberId", String.valueOf(member.getId()));
+        response.addCookie(cookie);
+
         return "redirect:/";
+    }
+
+    @PostMapping("/logout")
+    public String logout(HttpServletResponse response) {
+        expireCookie(response, "memberId");
+
+        return "redirect:/";
+    }
+
+    private static void expireCookie(HttpServletResponse response, String cookieName) {
+        Cookie cookie = new Cookie(cookieName, null);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
     }
 }

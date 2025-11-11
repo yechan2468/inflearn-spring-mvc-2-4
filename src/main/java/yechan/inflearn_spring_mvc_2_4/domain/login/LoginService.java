@@ -5,8 +5,6 @@ import org.springframework.stereotype.Service;
 import yechan.inflearn_spring_mvc_2_4.domain.member.Member;
 import yechan.inflearn_spring_mvc_2_4.domain.member.MemberRepository;
 
-import java.util.Optional;
-
 @Service
 @RequiredArgsConstructor
 public class LoginService {
