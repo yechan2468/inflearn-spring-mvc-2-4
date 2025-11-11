@@ -4,12 +4,16 @@ import jakarta.servlet.Filter;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import yechan.inflearn_spring_mvc_2_4.web.argumentresolver.LoginMemberArgumentResolver;
 import yechan.inflearn_spring_mvc_2_4.web.filter.LogFilter;
 import yechan.inflearn_spring_mvc_2_4.web.filter.LoginCheckFilter;
 import yechan.inflearn_spring_mvc_2_4.web.interceptor.LogInterceptor;
 import yechan.inflearn_spring_mvc_2_4.web.interceptor.LoginCheckInterceptor;
+
+import java.util.List;
 
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
@@ -27,7 +31,12 @@ public class WebConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/", "/members/add", "/login", "/logout", "/css/**", "/*.ico", "/error");
     }
 
-//    @Bean
+    @Override
+    public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+        resolvers.add(new LoginMemberArgumentResolver());
+    }
+
+    //    @Bean
     public FilterRegistrationBean<Filter> logFilter() {
         FilterRegistrationBean<Filter> registrationBean = new FilterRegistrationBean<>();
         registrationBean.setFilter(new LogFilter());
